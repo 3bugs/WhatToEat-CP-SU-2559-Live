@@ -1,8 +1,8 @@
 package com.example.whattoeat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -35,20 +35,8 @@ public class FoodListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar snackbar = Snackbar.make(
-                        view,
-                        "Replace with your own action",
-                        Snackbar.LENGTH_INDEFINITE
-                );
-
-                snackbar.setAction("Test", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-
-                snackbar.show();
+                Intent intent = new Intent(FoodListActivity.this, AddFoodActivity.class);
+                startActivity(intent);
             }
         });
     }

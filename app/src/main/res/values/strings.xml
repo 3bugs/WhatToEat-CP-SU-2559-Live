@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">What To Eat</string>
     <string name="title_activity_food_list">Food List</string>
+    <string name="title_activity_add_food">Add Food</string>
 </resources>
