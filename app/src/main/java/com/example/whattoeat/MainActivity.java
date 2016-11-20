@@ -2,7 +2,6 @@ package com.example.whattoeat;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -16,11 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.whattoeat.etc.Utils;
 import com.example.whattoeat.model.Food;
 import com.example.whattoeat.model.FoodMenu;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,26 +50,16 @@ public class MainActivity extends AppCompatActivity {
                 foodNameTextView.setText(randomFood.name);
 
                 // กำหนดรูปภาพอาหารลงใน layout ของไดอะล็อก
-                Drawable drawable = getDrawableFromAssets(randomFood.pictureFilename);
+                Drawable drawable = Utils.getDrawableFromAssets(
+                        MainActivity.this,
+                        randomFood.pictureFilename
+                );
                 foodImageView.setImageDrawable(drawable);
 
                 dialog.setView(layout);
                 dialog.show();
             }
         });
-    }
-
-    private Drawable getDrawableFromAssets(String pictureFilename) {
-        AssetManager am = getAssets();
-
-        try {
-            InputStream stream = am.open(pictureFilename);
-            Drawable drawable = Drawable.createFromStream(stream, null);
-            return drawable;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override

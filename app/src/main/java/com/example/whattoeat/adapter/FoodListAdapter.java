@@ -1,11 +1,16 @@
 package com.example.whattoeat.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.whattoeat.R;
+import com.example.whattoeat.etc.Utils;
 import com.example.whattoeat.model.Food;
 
 import java.util.ArrayList;
@@ -31,6 +36,16 @@ public class FoodListAdapter extends ArrayAdapter<Food> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return super.getView(position, convertView, parent);
+        View itemLayout = View.inflate(mContext, mLayoutResId, null);
+        ImageView foodImageView = (ImageView) itemLayout.findViewById(R.id.food_image_view);
+        TextView foodNameTextView = (TextView) itemLayout.findViewById(R.id.food_name_text_view);
+
+        Food food = mFoodList.get(position);
+        foodNameTextView.setText(food.name);
+
+        Drawable drawable = Utils.getDrawableFromAssets(mContext, food.pictureFilename);
+        foodImageView.setImageDrawable(drawable);
+
+        return itemLayout;
     }
 }

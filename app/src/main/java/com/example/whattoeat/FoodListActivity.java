@@ -8,6 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
+import com.example.whattoeat.adapter.FoodListAdapter;
+import com.example.whattoeat.model.FoodMenu;
+
 public class FoodListActivity extends AppCompatActivity {
 
     @Override
@@ -18,6 +21,15 @@ public class FoodListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ListView foodListView = (ListView) findViewById(R.id.food_list_view);
+        FoodMenu foodMenu = FoodMenu.getInstance(this);
+
+        FoodListAdapter adapter = new FoodListAdapter(
+                this,
+                R.layout.list_item,
+                foodMenu.getFoodList()
+        );
+
+        foodListView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
