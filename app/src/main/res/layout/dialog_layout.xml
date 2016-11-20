@@ -4,14 +4,14 @@
              android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/dish_image_view"
+        android:id="@+id/food_image_view"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:scaleType="centerCrop"
         android:src="@drawable/food" />
 
     <TextView
-        android:id="@+id/dish_name_text_view"
+        android:id="@+id/food_name_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
