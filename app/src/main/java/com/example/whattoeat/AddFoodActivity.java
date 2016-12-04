@@ -1,7 +1,9 @@
 package com.example.whattoeat;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.whattoeat.db.DatabaseHelper;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ChosenImages;
@@ -30,11 +33,14 @@ public class AddFoodActivity extends AppCompatActivity implements ImageChooserLi
     private Button mAddButton;
 
     private ImageChooserManager mImageChooserManager;
+    private String mPicturePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_food);
+
+
 
         mFoodNameEditText = (EditText) findViewById(R.id.food_name_edit_text);
         mFoodImageView = (ImageView) findViewById(R.id.food_image_view);
@@ -60,6 +66,24 @@ public class AddFoodActivity extends AppCompatActivity implements ImageChooserLi
                             }
                         })
                         .show();
+            }
+        });
+
+        mAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String foodName = mFoodNameEditText.getText().toString();
+
+                DatabaseHelper helper = new DatabaseHelper(AddFoodActivity.this);
+                SQLiteDatabase db = helper.getWritableDatabase();
+
+                ContentValues cv = new ContentValues();
+                cv.put(DatabaseHelper.COL_NAME, foodName);
+                cv.put(DatabaseHelper.COL_PICTURE, mPicturePath);
+
+                db.insert(DatabaseHelper.TABLE_NAME, null, cv);
+
+                finish();
             }
         });
     }
@@ -123,14 +147,14 @@ public class AddFoodActivity extends AppCompatActivity implements ImageChooserLi
                         if (image != null) {
                             //mChosenImage = image;
 
-                            String filePathOriginal = image.getFilePathOriginal();
+                            mPicturePath = image.getFilePathOriginal();
                             //Log.i(TAG, "-----");
                             //Log.i(TAG, "Image path: " + filePathOriginal);
                             //Log.i(TAG, "Image thumbnail path: " + image.getFileThumbnail());
                             //Log.i(TAG, "Image small thumbnail path: " + image.getFileThumbnailSmall());
 
                             Glide.with(AddFoodActivity.this)
-                                    .load(filePathOriginal)
+                                    .load(mPicturePath)
                                     .into(mFoodImageView);
                         } else {
                             //mChosenImage = null;

@@ -20,17 +20,6 @@ public class FoodListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ListView foodListView = (ListView) findViewById(R.id.food_list_view);
-        FoodMenu foodMenu = FoodMenu.getInstance(this);
-
-        FoodListAdapter adapter = new FoodListAdapter(
-                this,
-                R.layout.list_item,
-                foodMenu.getFoodList()
-        );
-
-        foodListView.setAdapter(adapter);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,4 +30,20 @@ public class FoodListActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        ListView foodListView = (ListView) findViewById(R.id.food_list_view);
+        FoodMenu foodMenu = FoodMenu.getInstance(this);
+        foodMenu.loadFromDatabase();
+
+        FoodListAdapter adapter = new FoodListAdapter(
+                this,
+                R.layout.list_item,
+                foodMenu.getFoodList()
+        );
+
+        foodListView.setAdapter(adapter);
+    }
 }
