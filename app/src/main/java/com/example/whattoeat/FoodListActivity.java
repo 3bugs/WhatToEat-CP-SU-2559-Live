@@ -32,8 +32,11 @@ public class FoodListActivity extends AppCompatActivity {
                 Food food = foodMenu.getFoodList().get(i);
 
                 Intent intent = new Intent(FoodListActivity.this, FoodDetailActivity.class);
+                intent.putExtra("position", i);
+/*
                 intent.putExtra("name", food.name);
                 intent.putExtra("picture", food.pictureFilename);
+*/
                 startActivity(intent);
             }
         });

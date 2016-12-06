@@ -2,30 +2,35 @@ package com.example.whattoeat.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.whattoeat.R;
+import com.example.whattoeat.etc.Utils;
 
 
 public class FoodDetailFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
+    private static final String ARG_FOOD_NAME = "name";
+    private static final String ARG_FOOD_PICTURE = "picture";
+
+    private String mFoodName;
+    private String mFoodPicture;
 
     public FoodDetailFragment() {
         // Required empty public constructor
     }
 
-    public static FoodDetailFragment newInstance(String param1, String param2) {
+    public static FoodDetailFragment newInstance(String name, String picture) {
         FoodDetailFragment fragment = new FoodDetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_FOOD_NAME, name);
+        args.putString(ARG_FOOD_PICTURE, picture);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,8 +39,8 @@ public class FoodDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mFoodName = getArguments().getString(ARG_FOOD_NAME);
+            mFoodPicture = getArguments().getString(ARG_FOOD_PICTURE);
         }
     }
 
@@ -46,4 +51,14 @@ public class FoodDetailFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_food_detail, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TextView foodNameTextView = (TextView) view.findViewById(R.id.food_name_text_view);
+        ImageView foodImageView = (ImageView) view.findViewById(R.id.food_image_view);
+
+        foodNameTextView.setText(mFoodName);
+        foodImageView.setImageDrawable(Utils.getDrawableFromAssets(getActivity(), mFoodPicture));
+    }
 }
